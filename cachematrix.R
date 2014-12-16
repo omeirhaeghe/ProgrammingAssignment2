@@ -1,31 +1,32 @@
 #
-# Matrix inversion is usually a costly computation.
-
-# There may be some benefit to caching the inverse of a
-# matrix rather than compute it repeatedly. The functions
-# below implement a simple way to speed up matrix inversion
-# by caching results of previous matrix inversion in memory,
-# and retrieving the cached inversion results.
+# Matrix inversion is a costly computation.
 #
-## Example
-## > x = rbind(c(1, -1/2), c(-1/2, 1))
-## > m = makeCacheMatrix(x)
-
-## No cache in the first run
-## > cacheSolve(m)
-## [,1]      [,2]
-## [1,] 1.3333333 0.6666667
-## [2,] 0.6666667 1.3333333
-
-
-## Retrieving from the cache in the second run
-## > cacheSolve(m)
-## getting cached data.
-## [,1]      [,2]
-## [1,] 1.3333333 0.6666667
-## [2,] 0.6666667 1.3333333
-## 
-
+# The functions below implement a simple way to speed up
+# matrix inversion by caching results of previous matrix 
+# inversion in memory, and retrieving the cached inversion results.
+#
+# Example
+# > x = rbind(c(1, -1/2), c(-1/2, 1))
+# > m = makeCacheMatrix(x)
+#
+# No cache in the first run
+# > cacheSolve(m)
+# [,1]      [,2]
+# [1,] 1.3333333 0.6666667
+# [2,] 0.6666667 1.3333333
+#
+# > cacheSolve(m)
+# getting cached data.
+# [,1]      [,2]
+# [1,] 1.3333333 0.6666667
+# [2,] 0.6666667 1.3333333
+# 
+# In the second cacheSolve(m) function call, the results are
+# retrieved from cache rather than recomputed. 
+#
+#
+# makeCacheMatrix
+#
 # makeCacheMatrix creates a list containing a function to 
 # cache the inverse of a matrix in a cache environment
 #
@@ -34,7 +35,9 @@
 # 3. set the value of inverse of the matrix
 # 4. get the value of inverse of the matrix
 #
+
 makeCacheMatrix <- function(x = matrix()) {
+
   inv <- NULL
   
   set <- function(y) {
@@ -55,6 +58,7 @@ makeCacheMatrix <- function(x = matrix()) {
        getinverse=getinverse)
 }
 
+#
 # cacheSolve(matrix)
 #
 # The cacheSolve function returns the inverse of the matrix.
